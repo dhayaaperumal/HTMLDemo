@@ -140,6 +140,16 @@
         alert(obj.permission)
        // setTitle(obj.photo);
         }
+		
+	funtion timeOut(){
+		//Android
+  	    if (window.FTKAndroidInterface != undefined) {
+
+            	//var inputValue = document.getElementById("name").value
+		window.FTKAndroidInterface.FTKTimeOut();	
+         
+            }
+	}
 
         
         function dismissPopup() {  
@@ -196,7 +206,9 @@
         <button type="button" onclick="checkPermissionStatus()">Check Permission</button>
         <br><br>
 
-		<button type="button" onclick="dismissPopup()">Dismiss Popup</button>
+	<button type="button" onclick="timeOut()">Session Time Out</button>
+	<br><br>
+	<button type="button" onclick="dismissPopup()">Dismiss Popup</button>
     	<script> titleToColor('Blue') </script>
     	
     	</center>

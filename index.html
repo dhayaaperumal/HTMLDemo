@@ -12,18 +12,12 @@
         		window.webkit.messageHandlers.getContacts.postMessage({});
             }
   
-  			//Android
-  			if (window.FTKAndroidInterface != undefined) {
+  	    //Android
+  	    if (window.FTKAndroidInterface != undefined) {
 
-          var inputValue = document.getElementById("name").value
-
-          if (inputValue.length > 0) {
-
-            window.FTKAndroidInterface.getOneContact(inputValue);
-          } 
-          else {
-            alert("Please enter the Name or Number.")
-          }
+            	//var inputValue = document.getElementById("name").value
+		window.FTKAndroidInterface.getOneContact();	
+         
             }
         }
 
@@ -34,10 +28,11 @@
           alert(result)
           }
           else {
-          var fields = result.split(',');
-          var name = fields[0];
-          var number = fields[1];
-          alert( "Name : " +name + "\n" + "Number : " + number)
+          //var fields = result.split(',');
+         // var name = fields[0];
+          //var number = fields[1];
+	var parsedData = JSON.parse(result)
+          alert( "Name : " parsedData.name + "\n" + "Number : " + parsedData.phone[0])
           }
 
        // setTitle(obj.contact);

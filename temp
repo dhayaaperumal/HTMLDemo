@@ -1,0 +1,56 @@
+   
+
+@RunWith(JUnit4::class)
+class TestContact {
+    val contact : Contact? = null
+@Test
+fun SingleContact() {
+        var contactList = getSingleContact()
+        var contactValidator = Validator()
+        var validateContact = contactValidator.validateSingleContact(contactList!!)
+        var validateMobile = contactValidator.validateMobileNumber(contactList?.number.toString())
+        var validateName = contactValidator.validateName(contactList?.name.toString())
+        var validateEmail = contactValidator.validateEmail(contactList?.email.toString())
+        // assertEquals(validateSize, true)
+assertNotNull(validateContact)
+        assertEquals(validateMobile, true)
+        assertEquals(validateName, true)
+        assertEquals(validateEmail, true)
+    }
+     fun getSingleContact(): Contact? {
+         var contact1  = Contact()
+         contact1.name = "Jayant Tiwari"
+contact1.number = "+15988j1+8$245"
+contact1.email = "amitt.jt@gmail.com"
+return contact1
+    }
+}
+
+
+class Validator {
+    fun validateSingleContact(contact: Contact) : Boolean }
+        return (contact != null)
+    }
+    fun validateMobileNumber(number1 : String) : Boolean {
+           var  number = number1.filter { it.isDigit() }
+if (number.length == 11 && number.startsWith("1")) {
+                number=number.drop(1)
+                var pattern = "^(?!0|1|000|800|844|855|866|877|888)\\d{10}$"
+return (number.matches(pattern.toRegex()) )
+            } else if (number.length == 10) {
+                var pattern = "^(?!0|1|000|800|844|855|866|877|888)\\d{10}$"
+return (number.matches(pattern.toRegex()))
+            }
+        return false
+}
+    fun validateName(name : String) : Boolean {
+        return ((!name.isEmpty() ||  name != null) && (name.length >= 2 && name.length <= 30)  )
+    }
+    fun validateEmail(email : String) : Boolean {
+        // var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+var emailPattern = "[_A-Za-z0-9\$]+([\\.\\-][_A-Za-z0-9\$]+)*@[A-Za-z0-9]+([\\.\\-][A-Za-z0-9]+)*\\.[A-Za-z{2,4}\$";
+        return (email.matches(emailPattern.toRegex()))
+    }
+}
+
+

@@ -1,23 +1,17 @@
 <html>
-    <head>
-      	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-	<script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<script>
 
 
-     // Single Contact	
-      function getSingleContactFromNativeCode() {  
-  			//iOS
-  			if (window.webkit != undefined) {
-        		window.webkit.messageHandlers.getContacts.postMessage({});
-            }
-  
-  	    //Android
-  	    if (window.FTKAndroidInterface != undefined) {
+		// Single Contact
+		function getSingleContactFromNativeCode() {
 
-            	//var inputValue = document.getElementById("name").value
-		window.FTKAndroidInterface.getOneContact();	
-         
+  			//Android
+  			if (window.FTKAndroidInterface != undefined) {
+				 window.FTKAndroidInterface.getOneContact();
+
             }
         }
 
@@ -25,42 +19,28 @@
         function callbackOneContact(obj) {
           var result = obj.contact
           if(result.includes("Contact Not")) {
-          alert(result)
-          }
-          else {
-          //var fields = result.split(',');
-         // var name = fields[0];
-          //var number = fields[1];
-	var parsedData = JSON.parse(result)
-          alert( "Name : " parsedData.name + "\n" + "Number : " + parsedData.phone[0])
+			alert(result)
+          }else
+		  {
+			const parsedData = JSON.parse(result);
+			alert( "Name : " +parsedData.name + "\n" + "Number : " + parsedData.phone + "\n" + "E-Mail : " + parsedData.email)
           }
 
-       // setTitle(obj.contact);
         }
 
         // All Contacts
-        function getContactsFromNativeCode() {  
-        //iOS
-        if (window.webkit != undefined) {
-            window.webkit.messageHandlers.getContacts.postMessage({});
-            }
-  
-        //Android
-        if (window.FTKAndroidInterface != undefined) {
-            window.FTKAndroidInterface.getContacts();
-            }
-        }
+        function getContactsFromNativeCode() {
+			//Android
+			if (window.FTKAndroidInterface != undefined) {
+				window.FTKAndroidInterface.getContacts();
+				}
+			}
 
         // Callback All Contacts
         function callbackContacts(obj) {
+            const parsedData = JSON.parse(obj.contact);
+            alert("Cached : "+parsedData.cached)
 
-          alert(obj.contacts)
-
-      // if (obj.cached) {
-      //  setTitle(cachedContacts.length);
-      // } else {
-      //  setTitle('NOT CACHED');
-      // }
         }
 
         // Callback Contacts Count
@@ -69,12 +49,8 @@
         }
 
         //  Qr code
-        function scanQRCode() {  
-  			//iOS
-  			if (window.webkit != undefined) {
-        		window.webkit.messageHandlers.scanQRCode.postMessage({});
-            }
-  
+        function scanQRCode() {
+
   			//Android
   			if (window.FTKAndroidInterface != undefined) {
         		window.FTKAndroidInterface.scanQRCode();
@@ -82,12 +58,8 @@
         }
 
         // scanning QR code from camera
-        function selectQRCodeFromPhotos() {  
-        //iOS
-        if (window.webkit != undefined) {
-            window.webkit.messageHandlers.scanQRCode.postMessage({});
-            }
-  
+        function selectQRCodeFromPhotos() {
+
         //Android
         if (window.FTKAndroidInterface != undefined) {
             window.FTKAndroidInterface.selectQRCodeFromPhotos();
@@ -96,68 +68,63 @@
 
         // Callback Qr code
         function callbackQRCode(obj) {
+			const parsedData = JSON.parse(obj.code);
+			alert( "Result : " +parsedData.qrCode)
 
-          alert(obj.code)
-       // setTitle(obj.code);
         }
 
         // take photo from camera
-        function takePhotoFromCamera() {  
-        //iOS
-        if (window.webkit != undefined) {
-            window.webkit.messageHandlers.scanQRCode.postMessage({});
-            }
-  
-        //Android
-        if (window.FTKAndroidInterface != undefined) {
-            window.FTKAndroidInterface.takePhoto();
-            }
-        }
-        
+        function takePhotoFromCamera() {
+
+			//Android
+			if (window.FTKAndroidInterface != undefined) {
+				window.FTKAndroidInterface.takePhoto();
+			}
+		}
+
         // Callback takePhoto
         function callbackPhoto(obj) {
 
         alert(obj.photo)
        // setTitle(obj.photo);
         }
-        
+
         // take photo from camera
-        function checkPermissionStatus() {  
+        function checkPermissionStatus() {
         //iOS
         if (window.webkit != undefined) {
             window.webkit.messageHandlers.checkPermissions.postMessage({});
             }
-  
+
         //Android
         if (window.FTKAndroidInterface != undefined) {
             window.FTKAndroidInterface.checkPermissions();
             }
         }
-        
+
         // Callback Permission
         function callbackPermissions(obj) {
 
         alert(obj.permission)
        // setTitle(obj.photo);
         }
-		
-	function timeOut(){
-		//Android
-  	    if (window.FTKAndroidInterface != undefined) {
 
-            	//var inputValue = document.getElementById("name").value
-		window.FTKAndroidInterface.FTKTimeOut();	
-         
-            }
-	}
+		function timeOut(){
+			//Android
+			if (window.FTKAndroidInterface != undefined) {
 
-        
-        function dismissPopup() {  
+				window.FTKAndroidInterface.FTKTimeOut();
+
+			}
+		}
+
+
+        function dismissPopup() {
   			//iOS
   			if (window.webkit != undefined) {
         		window.webkit.messageHandlers.dismissPopup.postMessage({});
             }
-  
+
   			//Android
   			if (window.FTKAndroidInterface != undefined) {
         		window.FTKAndroidInterface.dismissPopup();
@@ -168,42 +135,45 @@
           var title = document.getElementById("title");
             title.style.color = color;
         }
-		
+
     		function setTitle(text) {
     			var title = document.getElementById("title");
     			title.innerHTML = text;
     		}
 
     </script>
-	<body>
-	
-	<center>
-	
-    	<h1 id="title">Bridge Sdk</h1>
+<body>
 
-    		<button type="button" onclick="getSingleContactFromNativeCode()">Get Contact</button>
-    		<br><br>
+<center>
 
-        <button type="button" onclick="getContactsFromNativeCode()">Get Contacts</button>
-        <br><br>
-		
-        <button type="button" onclick="scanQRCode()">Scan QR Code</button>
-        <br><br>
+    <br><br>
+    <h1 id="title">Bridge Sdk</h1>
+    <br><br>
 
-        <button type="button" onclick="selectQRCodeFromPhotos()">Scan QR Code From Photos</button>
-        <br><br>
+    <button type="button" onclick="getSingleContactFromNativeCode()">Get Contact</button>
+    <br><br>
 
-        <button type="button" onclick="takePhotoFromCamera()">Take a Photo</button>
-        <br><br>
-        
-        <button type="button" onclick="checkPermissionStatus()">Check Permission</button>
-        <br><br>
+    <button type="button" onclick="getContactsFromNativeCode()">Get Contacts</button>
+    <br><br>
 
-	<button type="button" onclick="timeOut()">Session Time Out</button>
-	<br><br>
-	<button type="button" onclick="dismissPopup()">Dismiss Popup</button>
-    	<script> titleToColor('Blue') </script>
-    	
-    	</center>
-	</body>
+    <button type="button" onclick="scanQRCode()">Scan QR Code</button>
+    <br><br>
+
+    <button type="button" onclick="selectQRCodeFromPhotos()">Scan QR Code From Photos</button>
+    <br><br>
+
+    <button type="button" onclick="takePhotoFromCamera()">Take a Photo</button>
+    <br><br>
+
+    <button type="button" onclick="checkPermissionStatus()">Check Permission</button>
+    <br><br>
+
+    <button type="button" onclick="timeOut()">Session Time Out</button>
+    <br><br>
+
+    <button type="button" onclick="dismissPopup()">Dismiss Popup</button>
+    <script> titleToColor('Blue') </script>
+
+</center>
+</body>
 </html>
